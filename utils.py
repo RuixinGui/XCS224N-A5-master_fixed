@@ -40,13 +40,14 @@ def pad_sents_char(sents, char_pad_token):
     ### END YOUR CODE
     for sent in sents: # for each sent
         sent_padded=[]
-        for word in sent:
-            word_padded =[char_pad_token] * max_word_length
-            word_padded[:len(word)]=word
+        for word in sent[:max_sentence_length]:
+            word_padded = word[:max_word_length] # no matter if len < or > maxwordlen
+            word_padded = word_padded + [char_pad_token] * (max_word_length - len(word_padded))
            
             sent_padded.append(word_padded)
         sent_padded += [[char_pad_token] * max_word_length] * (max_sentence_length - len(sent_padded))
         sents_padded.append(sent_padded)
+    #print(len(sents_padded))
     return sents_padded
 # batch size* max_sentence*max_word
 
